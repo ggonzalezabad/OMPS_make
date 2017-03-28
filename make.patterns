@@ -1,0 +1,281 @@
+# ==================================
+#  PATTERN rule for F90 compilation
+# ==================================
+.SUFFIXES: .f90 .f .F
+
+
+# ---------------------------------------------
+# L1b Reader sources (modules!) and some C code
+# ---------------------------------------------
+$(L1HMOD).o:
+	$(FC) -c $(FFLAGS) $(IFLAGS) $<
+	mv -f *.o *.mod $(PGETMPDIR)
+$(L1ZMOD).o:
+	$(FC) -c $(FFLAGS) $(IFLAGS) $<
+	mv -f *.o *.mod $(PGETMPDIR)
+$(L1RMOD).o:
+	$(FC) -c $(FFLAGS) $(IFLAGS) $<
+	mv -f *.o *.mod $(PGETMPDIR)
+.c.o:
+	$(CC) -c $(CFLAGS) $(CINCFLGS) $<
+	mv -f $*.o $(PGETMPDIR)
+
+# -----------
+# PGE sources
+# -----------
+%_module.o:
+	$(FC) -c $(FFLAGS) $(IFLAGS) $<
+	mv -f $*_module.o *.mod $(PGETMPDIR)
+
+.f90.o :
+	$(FC) -c $(FFLAGS) $(IFLAGS) $<
+	mv -f $*.o $(PGETMPDIR)
+
+.f.o:
+	$(FC) -c $(FFLAGS) $(IFLAGS) $<
+	mv -f $*.o $(PGETMPDIR)
+
+.F.o:
+	$(FC) -c $(FFLAGS) $(IFLAGS) $<
+	mv -f $*.o $(PGETMPDIR)
+
+
+# ---------------------------------------------
+# Pattern rule for the creation of SMF messages
+# ---------------------------------------------
+PGS_%.f : %.t
+	echo $(PGSBIN)
+	$(PGSBIN)/smfcompile -r -f77 -f $< -o $@
+	$(MV) $(OMISAOSHARED)/src/$@ $(PGETMPDIR)/
+PGS_%.h : %.t
+	echo $(PGSBIN)
+	$(PGSBIN)/smfcompile -r      -f $< -o $@
+	$(MV) $(OMISAOSHARED)/src/$@ $(PGETMPDIR)/
+
+# ----------------------------------------------
+# Short-hand notations for compiled MODULE files
+# ----------------------------------------------
+LPRCM = $(PRCMOD).o
+LCASM = $(CASMOD).o
+LIDXM = $(IDXMOD).o
+LPARM = $(PARMOD).o
+LMEDM = $(MEDMOD).o
+LVARM = $(VARMOD).o
+LOMDM = $(OMDMOD).o
+LERRM = $(ERRMOD).o
+LH5SM = $(H5SMOD).o
+LH5FM = $(H5FMOD).o
+LMETM = $(METMOD).o
+LNLSM = $(NLSMOD).o
+LSFIM = $(SFIMOD).o
+LPXCM = $(PXCMOD).o
+LRRFM = $(RRFMOD).o
+LSWCM = $(SWCMOD).o
+LXTDM = $(XTDMOD).o
+LSOCM = $(SOCMOD).o
+LPFIM = $(PFIMOD).o
+L1BRM = $(L1RMOD).o
+LAMFM = $(AMFMOD).o
+LWFAM = $(WFAMOD).o
+LSMAM = $(SMAMOD).o
+LRSCM = $(RSCMOD).o
+LLINM = $(LINMOD).o
+HDF5R = $(HDFMOD).o
+SLTOM = $(SLTMOD).o
+
+# =====================================================
+#  Various DEPENDENCIES, which tell Make  to recompile
+#  subroutines when the source files have changed
+# =====================================================
+
+# --------------------------
+# L1b Reader and SMF sources
+# --------------------------
+OMI_SMF_setmsg.o : OMI_SMF_setmsg.c omi_smf.h
+OMI_L1B_reader.o : OMI_L1B_reader.c omi_smf.h l1b_reader.h PGS_OMI_1900.h
+$(L1HMOD).o      : $(L1HMOD).f90
+$(L1ZMOD).o      : $(L1ZMOD).f90 
+$(L1RMOD).o      : $(L1RMOD).f90 PGS_OMI_1900.f $(L1HMOD).o $(L1ZMOD).o
+
+# ----------------
+# True PGE sources
+# ----------------
+$(PRCMOD).o : $(PRCMOD).f90
+$(CASMOD).o : $(CASMOD).f90
+$(PARMOD).o : $(PARMOD).f90   $(LPRCM)
+$(IDXMOD).o : $(IDXMOD).f90   $(LPRCM) $(LPARM)
+$(MEDMOD).o : $(MEDMOD).f90   $(LPRCM)
+$(VARMOD).o : $(VARMOD).f90   $(LPRCM) $(LIDXM) $(LPARM) $(LOMDM)
+$(OMDMOD).o : $(OMDMOD).f90   $(LPRCM) $(LIDXM) $(LPARM)
+$(ERRMOD).o : $(ERRMOD).f90   $(LPRCM) $(LPARM) $(PGEPGSCMP)
+$(H5SMOD).o : $(H5SMOD).f90   $(LPRCM) $(LIDXM) $(LPARM) $(LERRM)
+$(H5FMOD).o : $(H5FMOD).f90   $(LPRCM) $(LIDXM) $(LPARM) $(LH5SM)
+$(METMOD).o : $(METMOD).f90   $(LPRCM) $(LIDXM) $(LPARM)
+$(NLSMOD).o : $(NLSMOD).f90   $(LPRCM)
+$(AMFMOD).o : $(AMFMOD).f90   $(LPRCM) $(LPARM) $(LIDXM) $(LOMDM) \
+                              $(LVARM) $(LH5SM) $(LERRM)
+$(WFAMOD).o : $(WFAMOD).f90   $(LPRCM) $(LERRM) $(LPARM) $(LH5SM) \
+                              $(LAMFM) $(LLINM) readh5dataset.f90
+$(SFIMOD).o : $(SFIMOD).f90   $(LPRCM) $(LIDXM) $(LOMDM) $(LVARM) \
+                              $(LERRM)
+$(PXCMOD).o : $(PXCMOD).f90   $(LPRCM) $(LERRM) $(LPARM) $(LIDXM) \
+                              $(LOMDM) $(L1BRM) $(LH5SM) $(LNLSM)
+$(RRFMOD).o : $(RRFMOD).f90   $(LPRCM) $(LPARM) $(LVARM) $(LOMDM) \
+                              $(LERRM) $(LIDXM) $(LSFIM) $(LPFIM) \
+                              $(L1BRM)
+$(SWCMOD).o : $(SWCMOD).f90   $(LPRCM) $(LIDXM) $(LERRM) $(LPARM) \
+                              $(LVARM) $(LOMDM) $(LSFIM)
+$(XTDMOD).o : $(XTDMOD).f90   $(LPRCM) $(LIDXM) $(LERRM) $(LPARM) \
+                              $(LVARM) $(LH5SM) $(LOMDM) $(LNLSM) \
+                              $(LMEDM)
+$(SOCMOD).o : $(SOCMOD).f90   $(LPRCM) $(LOMDM) $(LERRM) $(LPARM)
+$(PFIMOD).o : $(PFIMOD).f90   $(LPRCM) $(LIDXM) $(LOMDM) $(LERRM) \
+                              $(LPARM) $(LVARM) $(LH5SM)
+
+$(SMAMOD).o : $(SMAMOD).f90   $(LPRCM) $(LOMDM) $(LERRM) $(LVARM) \
+                              $(LIDXM) $(LH5SM)
+$(RSCMOD).o : $(RSCMOD).f90   $(LPRCM) $(LERRM) $(LIDXM) $(LVARM) \
+                              $(LRRFM) $(LH5SM) $(LWFAM)
+$(LINMOD).o : $(LINMOD).f90
+
+readh5dataset.o : readh5dataset.f90
+
+$(HDFMOD).o : $(HDFMOD).f90
+
+$(SLTMOD).o : $(SLTMOD).f90 readh5dataset.f90
+
+$(MAIN).o                   : $(MAIN).f90                         \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LERRM) $(LH5FM) $(LSFIM) $(LWFAM) \
+                              $(LRSCM)
+
+OMSAO_main.o                : OMSAO_main.f90                      \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LERRM) $(LH5FM) $(LSFIM)
+
+create_radiance_reference.o : create_radiance_reference.f90       \
+			      $(HDF5R) $(LERRM) $(LPRCM) $(LOMDM)
+
+angle_sat2toa.o             : angle_sat2toa.f90                   \
+                              $(LPRCM) $(LPARM)
+
+dataspline.o                : dataspline.f90                      \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LOMDM) $(LSFIM) $(LERRM)
+
+ezspline_interpolation.o    : ezspline_interpolation.f90          \
+                              $(LPRCM) $(LERRM)
+
+fitting_functions.o         : fitting_functions.f90               \
+                              $(LPRCM) $(LPARM) $(LVARM) 
+
+fitting_loops.o             : fitting_loops.f90                   \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LOMDM) $(LERRM) $(LSFIM) $(LRRFM) \
+                              $(LAMFM) $(LH5SM) $(LPFIM)
+
+gauss.o                     : gauss.f90                           \
+                              $(LPRCM)
+
+he5_output_tools.o          : he5_output_tools.f90                \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LOMDM) $(LERRM) $(LH5SM) $(LH5FM) \
+                              $(LAMFM) $(LRRFM)
+
+integration_routines.o      : integration_routines.f90            \
+                              $(LPRCM) $(LERRM) 
+
+metadata_tools.o            : metadata_tools.f90                  \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LERRM) $(LMETM) $(LH5SM) $(LOMDM) \
+                              $(LPFIM)
+
+omi_pge_fitting_aux.o       : omi_pge_fitting_aux.f90             \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LOMDM) $(LERRM) $(LH5SM) $(LMETM) \
+                              $(LSOCM) $(LRRFM) $(LPFIM)          \
+                              dataspline.o ezspline_interpolation.o
+
+omi_pge_fitting_process.o   : omi_pge_fitting_process.f90         \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LOMDM) $(LERRM) $(LH5SM) $(LH5FM) \
+                              $(LMETM) $(LAMFM) $(LSWCM) $(LXTDM) \
+                              $(LSOCM) $(LRRFM) $(LPFIM) $(HDF5R) \
+                              $(LPXCM)
+
+prepare_databases.o         : prepare_databases.f90               \
+                              $(LPRCM) $(LVARM) $(LERRM) $(LIDXM) \
+                              $(LPARM)
+
+omi_pge_postprocessing.o    : omi_pge_postprocessing.f90          \
+                              $(LPRCM) $(LH5SM) $(LPXCM) $(LXTDM) \
+                              $(LAMFM) $(LERRM) $(LIDXM) $(LRSCM) \
+                              $(LWFAM)
+
+omi_pge_swathline_loop.o    : omi_pge_swathline_loop.f90          \
+                              $(LPRCM) $(LPARM) $(LIDXM) $(LVARM) \
+                              $(LOMDM) $(LXTDM) $(LPFIM) $(LERRM) \
+                              $(LRRFM)
+
+omps_data_to_omi_variables.o : omps_data_to_omi_variables.f90     \
+                               $(LOMDM)
+
+radiance_fit.o              : radiance_fit.f90                    \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LPFIM)
+
+radiance_wavcal.o           : radiance_wavcal.f90                 \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LERRM)
+
+read_fitting_control_file.o : read_fitting_control_file.f90       \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LOMDM) $(LXTDM) $(LERRM) $(LRRFM) \
+                              $(LPFIM) $(LCASM) $(LAMFM) $(LWFAM)
+
+read_pcf_file.o             : read_pcf_file.f90                   \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LERRM) $(LH5SM) $(LOMDM) $(LMETM) \
+                              $(LRRFM) $(LPFIM) $(LWFAM)
+
+read_reference_spectra.o    : read_reference_spectra.f90          \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LERRM) $(LH5FM) $(LSOCM) $(LOMDM)
+
+sao_pge_utils.o             : sao_pge_utils.f90                   \
+                              $(LPRCM) $(LIDXM) $(LVARM) $(LERRM) \
+                              dataspline.o ezspline_interpolation.o
+
+SLATEC_davint.o             : SLATEC_davint.f90                   \
+                              $(LPRCM)
+
+specfit.o                   : specfit.f90                         \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LNLSM)
+
+spectra.o                   : spectra.f90                         \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LERRM) $(LSFIM) $(LOMDM) $(LSOCM) \
+                              $(LRRFM) $(LPFIM)
+
+subtract_cubic.o            : subtract_cubic.f90                  \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LNLSM)
+
+undersample.o               : undersample.f90                     \
+                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LERRM) $(LSFIM)
+
+ioerror.o                   : ioerror.F
+
+# -----------------
+# SMF message files
+# -----------------
+PGS_OMSAO_52500.f : OMSAO_52500.t
+
+# -------
+# C files
+# -------
+unbufferSTDOUT.o : unbufferSTDOUT.c
+
+

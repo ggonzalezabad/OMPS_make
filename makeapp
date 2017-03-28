@@ -1,0 +1,43 @@
+#!/bin/env bash
+
+# ------------------------------------------------------------------------
+# Figure out which bit-type of PGI/pgf95 we are using:
+# ------------------------------------------------------------------------
+# "pgf95 -show" contains information on the bit version (32 or 64) via the
+# variable TARGETARCH, which is either 64 or 32.
+# ------------------------------------------------------------------------
+export OMIUTIL=/data/tempo2/ggonzale/TEMPO_code/ots/gnu
+
+source ${OMIUTIL}/sdptk/SDPTK5.2.19v1.00/TOOLKIT/bin/linux/pgs-dev-env.ksh
+export MACHINE=`uname -a | awk '{print $2}'`
+
+export SAOPGE=`(cd ../; pwd | awk -F "/" '{print $NF}')`
+echo 'Compiling ' ${SAOPGE}'.exe for machine ' ${MACHINE}
+
+export PGEHOME=`pwd`/..
+export PGS_PC_INFO_FILE=${PGEHOME}/src/${SAOPGE}.pcf
+export PGEVERSION=`grep PGEVERSION ${PGS_PC_INFO_FILE}|sed 's/\"//g'|sed 's/|/ /g'|awk '{print $3}'`
+export PGEIODIR=${PGEHOME}/out
+export OMISAOSHARED=../../OMPS_SAO_Shared
+export UTDATADIR=/data/tempo2/ggonzale/OMPS_source/l1b
+export UTDATAINS=${UTDATADIR}
+export UTDATAOUT=${UTDATADIR}
+
+# ---------------------------------------
+# Include debugging and profiling options
+# ---------------------------------------
+target=$1
+if [ "$1" == "debug" ]; then
+    export debug="true"
+    target="install"
+fi
+if [ "$1" == "profile" ]; then
+    export profile="true"
+    target="install"
+fi
+
+export MACHSHELL=/bin/ksh
+export PGSMSG=${PGEHOME}/bin
+export MKFDIR=`pwd`/../../OMPS_make
+gmake --warn-undefined-variables -f ${MKFDIR}/Makefile $target
+echo 'EXIT VALUE of Make Process is ' `echo $?`

@@ -1,0 +1,183 @@
+# =================================================
+#  All source files required for this distribution
+# =================================================
+
+# -------------------------------------
+# Short-hand notations for MODULE files
+# -------------------------------------
+L1HMOD = hdfeos4_parameters
+L1ZMOD = Szoom_Parameter_Module
+L1RMOD = L1B_Reader_class
+PRCMOD = OMSAO_precision_module
+IDXMOD = OMSAO_indices_module
+PARMOD = OMSAO_parameters_module
+MEDMOD = OMSAO_median_module
+VARMOD = OMSAO_variables_module
+OMDMOD = OMSAO_omidata_module
+ERRMOD = OMSAO_errstat_module
+H5SMOD = OMSAO_he5_module
+H5FMOD = OMSAO_he5_datafields_module
+METMOD = OMSAO_metadata_module
+SFIMOD = OMSAO_slitfunction_module
+NLSMOD = OMSAO_elsunc_fitting_module
+AMFMOD = OMSAO_amf_module
+WFAMOD = OMSAO_wfamf_module
+PXCMOD = OMSAO_pixelcorner_module
+RRFMOD = OMSAO_radiance_ref_module
+SWCMOD = OMSAO_solar_wavcal_module
+XTDMOD = OMSAO_destriping_module
+SOCMOD = OMSAO_solcomp_module
+PFIMOD = OMSAO_prefitcol_module
+CASMOD = OMSAO_casestring_module
+SMAMOD = OMSAO_solmonthave_module
+RSCMOD = OMSAO_Reference_sector_module
+LINMOD = OMSAO_linterpolation_module
+HDFMOD = OMSAO_OMPS_READER
+SLTMOD = OMSAO_OMPS_SLIT_READER
+
+
+CSOURCES   = OMI_SMF_setmsg.c              \
+             OMI_L1B_reader.c              \
+             unbufferSTDOUT.c
+
+
+F90SOURCES = readh5dataset.f90             \
+             $(PRCMOD).f90                 \
+             $(L1HMOD).f90                 \
+             $(L1ZMOD).f90                 \
+             $(L1RMOD).f90                 \
+             $(CASMOD).f90                 \
+             $(IDXMOD).f90                 \
+             $(PARMOD).f90                 \
+             $(MEDMOD).f90                 \
+             $(VARMOD).f90                 \
+             $(OMDMOD).f90                 \
+             $(ERRMOD).f90                 \
+             $(H5SMOD).f90                 \
+             $(H5FMOD).f90                 \
+	     $(SLTMOD).f90                 \
+             $(METMOD).f90                 \
+             $(NLSMOD).f90                 \
+             $(SFIMOD).f90                 \
+             $(AMFMOD).f90                 \
+             $(WFAMOD).f90                 \
+             $(PXCMOD).f90                 \
+             $(RRFMOD).f90                 \
+             $(SWCMOD).f90                 \
+             $(XTDMOD).f90                 \
+             $(SOCMOD).f90                 \
+             $(PFIMOD).f90                 \
+             $(SMAMOD).f90                 \
+             $(RSCMOD).f90                 \
+             $(LINMOD).f90                 \
+             $(HDFMOD).f90                 \
+             OMSAO_main.f90                \
+	     create_radiance_reference.f90 \
+             angle_sat2toa.f90             \
+             dataspline.f90                \
+             ezspline_interpolation.f90    \
+             fitting_functions.f90         \
+             fitting_loops.f90             \
+             gauss.f90                     \
+             he5_output_tools.f90          \
+             integration_routines.f90      \
+             metadata_tools.f90            \
+             omi_pge_fitting_aux.f90       \
+             omi_pge_fitting_process.f90   \
+             omi_pge_postprocessing.f90    \
+             omi_pge_swathline_loop.f90    \
+             prepare_databases.f90         \
+             radiance_fit.f90              \
+             radiance_wavcal.f90           \
+             read_fitting_control_file.f90 \
+             read_pcf_file.f90             \
+             read_reference_spectra.f90    \
+             sao_pge_utils.f90             \
+             SLATEC_davint.f90             \
+             specfit.f90                   \
+             spectra.f90                   \
+             subtract_cubic.f90            \
+             undersample.f90               \
+             omps_data_to_omi_variables.f90
+
+#\
+#             he5_input_tools.f90           \
+#             prepare_refspecs.f90          \
+#             solar_fit.f90                 \
+
+OBJECTS = readh5dataset.o             \
+          $(PRCMOD).o                 \
+          $(L1HMOD).o                 \
+          $(L1ZMOD).o                 \
+          $(L1RMOD).o                 \
+          $(CASMOD).o                 \
+          $(IDXMOD).o                 \
+          $(PARMOD).o                 \
+          $(MEDMOD).o                 \
+          $(VARMOD).o                 \
+          $(OMDMOD).o                 \
+          $(ERRMOD).o                 \
+          $(H5SMOD).o                 \
+          $(H5FMOD).o                 \
+	  $(SLTMOD).o                 \
+          $(METMOD).o                 \
+          $(NLSMOD).o                 \
+          $(SFIMOD).o                 \
+          $(AMFMOD).o                 \
+          $(WFAMOD).o                 \
+          $(PXCMOD).o                 \
+          $(RRFMOD).o                 \
+          $(SWCMOD).o                 \
+          $(XTDMOD).o                 \
+          $(SOCMOD).o                 \
+          $(PFIMOD).o                 \
+          $(SMAMOD).o                 \
+          $(RSCMOD).o                 \
+          $(LINMOD).o                 \
+          $(HDFMOD).o                 \
+          OMSAO_main.o                \
+	  create_radiance_reference.o \
+          angle_sat2toa.o             \
+          dataspline.o                \
+          ezspline_interpolation.o    \
+          fitting_functions.o         \
+          fitting_loops.o             \
+          gauss.o                     \
+          he5_output_tools.o          \
+          integration_routines.o      \
+          metadata_tools.o            \
+          omi_pge_fitting_aux.o       \
+          omi_pge_fitting_process.o   \
+          omi_pge_postprocessing.o    \
+          omi_pge_swathline_loop.o    \
+          prepare_databases.o         \
+          radiance_fit.o              \
+          radiance_wavcal.o           \
+          read_fitting_control_file.o \
+          read_pcf_file.o             \
+          read_reference_spectra.o    \
+          sao_pge_utils.o             \
+          SLATEC_davint.o             \
+          specfit.o                   \
+          spectra.o                   \
+          subtract_cubic.o            \
+          undersample.o               \
+          unbufferSTDOUT.o            \
+          OMI_SMF_setmsg.o            \
+          OMI_L1B_reader.o            \
+          omps_data_to_omi_variables.o
+
+#\
+#          $(LOCALLIB)(he5_input_tools.o)           \
+#          $(LOCALLIB)(prepare_refspecs.o)          \
+#          $(LOCALLIB)(solar_fit.o)
+
+LINKOBS = $(patsubst %.o,$(PGETMPDIR)/%.o,$(OBJECTS))
+
+PGEPGSSRC = OMSAO_52500.t OMI_1900.t
+
+PGEPGSCMP = PGS_OMSAO_52500.f PGS_OMI_1900.f PGS_OMI_1900.h
+
+TKPGSCMP =  PGS_1 PGS_3 PGS_4 PGS_5 PGS_6 PGS_7 PGS_9 PGS_11 \
+            PGS_12 PGS_13 PGS_14 PGS_15 PGS_10 PGS_1900
+

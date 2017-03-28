@@ -1,0 +1,15 @@
+# =================================================
+#  Everything we want to make in this distribution
+#  (only present because we need a TARGET before
+#  the first executable command)
+# =================================================
+all : $(SAOAPP).exe
+
+# ----------------------------------------------------------------------
+# The following target runs the executable, nothing else. In particular,
+# no checking for dependencies. Else we will be running the risk that a
+# "busy" (i.e., executing) target is attempted to be overwritten, which
+# should lead to the unwanted failing of "gmake run".
+# ----------------------------------------------------------------------
+run: 
+	@cd $(IODIR); $(IODIR)/$(SAOAPP).exe; echo 'EXIT VALUE of PGE run is ' $$?

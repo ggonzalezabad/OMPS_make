@@ -1,0 +1,105 @@
+# =============================================================
+# This file contains a collection of GNUMake targets that are
+# different than, but related to, the PGE executable. They are
+# collected here to maintain a shorter and more structured main
+# Makefile.
+# =============================================================
+
+.PHONY : dirs tkmessages clean cleandirs cleanexe cleanobj cleanmod cleancomp \
+         cleanmessages distclean cleanoutput realclean links cleanlinks
+
+# -----------------------
+# Create some directories
+# ----------------------------------------------------------------
+# The following directories are usually empty at CVS checkin and
+# are not created when a tagged version of the PGE is checked out.
+# The Make structure to create these directories assumes a Bourne
+# shell environment.
+#----------------------------------------------------------------- 
+dirs: 
+	@for subdir in $(emptydirs); do  \
+           mkdir -p $$subdir;            \
+         done
+
+# --------------------
+# Links to input files
+# --------------------
+links:
+	@for FILE in `ls $$UTDATAINS`; do \
+            if [[ ! -a $$PGEIODIR/$$FILE ]]; then \
+               ln -s $$UTDATAINS/$$FILE $$PGEIODIR; fi; done
+	mkdir -p ../tbl
+	@for DATFILE in `ls $$OMISAOSHARED/tbl | grep -e dat -e he5`; do \
+            if [[ ! -a ../tbl/$$DATFILE ]]; then  \
+               ln -s $$OMISAOSHARED/tbl/$$DATFILE ../tbl; fi; done
+
+cleanlinks:
+	@for SRCFILE in `find ../tbl -type l`; do rm -f ../tbl/$$SRCFILE; done
+	@for SRCFILE in `find $$PGEIODIR -type l`; do rm -f $$PGEIODIR/$$SRCFILE; done
+
+# --------------------
+# Save output
+# --------------------
+save:
+	@rm -fr $$UTDATAOUT ; mkdir -p $$UTDATAOUT
+	@for FILE in `ls $$PGEIODIR`; do \
+            if [[ ! -h $$UTDATAINS/$$FILE ]]; then \
+               cp -p $$PGEIODIR/$$FILE $$UTDATAOUT; fi; done
+
+# ---------------------------------------
+# The PGE and TOOLKIT error message files
+# ---------------------------------------
+messages: pgemessages tkmessages
+
+pgemessages: $(PGEPGSCMP)
+
+tkmessages:
+	@for tkpgs in $(TKPGSCMP); do                                 \
+           if [[ ! -e $(PGSMSG)/$$tkpgs ]]; then                      \
+              echo 'Copying' $$tkpgs 'to' $(PGSMSG);                  \
+              touch $(PGSMSG)/$$tkpgs ; chmod u+w $(PGSMSG)/$$tkpgs;  \
+              cp -p $(PGSHOME)/message/$$tkpgs $(PGSMSG)/;            \
+           fi;                                                        \
+         done
+
+
+# ---------------------------------------------------
+#  Just in case, we want to CLEAN up once in a while
+# ---------------------------------------------------
+cleandirs: 
+	@echo ' * Removing empty directories from PGE distribution tree ...'
+	@for subdir in $(emptydirs); do rm -rf  $$subdir; done
+
+cleanexe: 
+	@echo ' * Removing PGE executables' $(TARGET), $(PGEBINDIR)/$(TARGET) '...'
+	@-rm -f $(TARGET)
+
+cleanobj: 
+	@echo ' * Removing PGE object files' $(OBJECTS) '...'
+	@-rm -f $(PGETMPDIR)/*.o *__genmod.*
+
+cleanmod: 
+	@echo ' * Removing compiled F90 Module files in' $(PGETMPDIR) '...'
+	@-rm -f $(PGETMPDIR)/*.mod $(PGETMPDIR)/*.M 
+
+cleanlog:
+	@echo ' * Removing Log Status and error log files ...'
+	@-rm -rf $(PGEOUTDIR)/Log* $(PGEOUTDIR)/ShMem $(PGEOUTDIR)/$(SAOPGE).std*
+
+cleanmessages: 
+	@echo ' * Removing compiled PGS message files in' $(PGSMSG) '...'
+	@-rm -rf $(PGSMSG)/PGS* $(PGETMPDIR)/PGS*.f
+
+cleanoutput:
+	@echo ' * Removing PGE output ...'
+	@-rm -rf $(PGEOUTDIR)/*.out  $(PGEOUTDIR)/*.he5  $(PGEOUTDIR)/*.txt
+	
+cleancomp:
+	@echo ' * Removing compilation byproducts ...'
+	@-cd $(OMISAOSHARED)/src; rm -rf *.o *.M *.stb *.l *.flc $(PGEPGSCMP)
+
+clean: cleanexe cleanobj cleanmod cleancomp cleanlinks
+
+realclean: clean cleanmessages cleanlog cleanoutput
+
+distclean: realclean cleandirs

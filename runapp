@@ -1,0 +1,16 @@
+#!/bin/env bash
+
+PCF=$1
+
+export APPHOME=$(pwd | sed "s/\/src//1")
+export SAOAPP=$(basename ${APPHOME})
+export IODIR=${APPHOME}/out
+export OMIUTIL=/data/tempo2/ggonzale/TEMPO_code/ots/gnu
+
+source ${OMIUTIL}/sdptk/SDPTK5.2.19v1.00/TOOLKIT/bin/linux/pgs-dev-env.ksh
+  
+export PGS_PC_INFO_FILE=${APPHOME}/src/${PCF}
+export PGSMSG=${APPHOME}/bin
+
+gmake -f ../../OMPS_make/Makefile.RunIt run
+

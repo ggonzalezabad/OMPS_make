@@ -1,0 +1,48 @@
+# ================================================================================
+# Include file for (GNU) makefiles. Defines platform dependent compiler directives
+# ================================================================================
+FC         = gfortran -static -fbacktrace -fPIC -cpp
+CC         = gcc
+FFLAGSopt  = -O3
+FFLAGSdbg  = -g -ggdb -Wall -Wextra -pedantic -fcheck=all -ftrapv \
+             -ffpe-summary=invalid,zero,overflow,underflow,inexact,denormal
+FFLAGSprof = -O3 -pg
+CFLAGS     = -O3 -DLINUX -Df2cFortran
+
+# System libraries
+# ----------------
+ADDLIBS    = -lsz -lm -ldl
+
+# PSPLINE library
+# ---------------
+PSPLINEMOD = $(OMIUTIL)/mod
+PSPLINELIB = $(OMIUTIL)/lib
+
+# Include folders
+# ---------------
+IFLAGS   = -I$(OMIUTIL)/include -I$(PSPLINEMOD) \
+           -I$(PGETMPDIR) -I$(PGSINC) \
+           -I$(HDFEOS_INC) -I$(HDFEOS5_INC)
+CINCFLGS = -I$(PGSINC) -I$(HDFINC) -I$(HDFEOS_INC) -I$(PGETMPDIR)
+
+# Linking folders
+# ---------------
+LFLAGS = -L$(OMIUTIL)/lib -L$(HDFEOS_LIB) \
+         -L$(HDFEOS5_LIB) -L$(PGSLIB)
+
+# Libraries
+# ---------
+LIBS   = $(PSPLINELIBS) $(NETCDFLIBS) \
+         $(PGSLIBS) $(HE5LIBS) \
+         $(HE4LIBS) $(ADDLIBS)
+
+# ----------------------------- 
+# Setting the compiler flags
+# -----------------------------
+FFLAGS = $(FFLAGSopt)
+ifdef debug
+   FFLAGS    = $(FFLAGSdbg)
+endif
+ifdef profile 
+   FFLAGS    = $(FFLAGSprof)
+endif
