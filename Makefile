@@ -80,7 +80,7 @@ all : dirs messages $(EXECUTABLE)
 #  objects $(OBJECTS) and the various Modules
 # ============================================
 $(EXECUTABLE) : $(OBJECTS) $(MAIN).f90 $(CSOURCES) $(F90SOURCES)
-	$(FC) $(MAIN).f90 -o $(TARGET) $(LINKOBS) $(FFLAGS) $(IFLAGS) $(LFLAGS) $(LIBS)
+	$(FC) $(FFLAGS) $(MAIN).f90 -o $(TARGET) $(LINKOBS) $(IFLAGS) $(LFLAGS) $(LIBS)
 
 
 # =============================================================

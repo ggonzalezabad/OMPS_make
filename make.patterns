@@ -75,7 +75,6 @@ LXTDM = $(XTDMOD).o
 LSOCM = $(SOCMOD).o
 LPFIM = $(PFIMOD).o
 L1BRM = $(L1RMOD).o
-LAMFM = $(AMFMOD).o
 LWFAM = $(WFAMOD).o
 LSMAM = $(SMAMOD).o
 LRSCM = $(RSCMOD).o
@@ -112,10 +111,8 @@ $(H5SMOD).o : $(H5SMOD).f90   $(LPRCM) $(LIDXM) $(LPARM) $(LERRM)
 $(H5FMOD).o : $(H5FMOD).f90   $(LPRCM) $(LIDXM) $(LPARM) $(LH5SM)
 $(METMOD).o : $(METMOD).f90   $(LPRCM) $(LIDXM) $(LPARM)
 $(NLSMOD).o : $(NLSMOD).f90   $(LPRCM)
-$(AMFMOD).o : $(AMFMOD).f90   $(LPRCM) $(LPARM) $(LIDXM) $(LOMDM) \
-                              $(LVARM) $(LH5SM) $(LERRM)
 $(WFAMOD).o : $(WFAMOD).f90   $(LPRCM) $(LERRM) $(LPARM) $(LH5SM) \
-                              $(LAMFM) $(LLINM) readh5dataset.f90
+                               $(LLINM) readh5dataset.f90
 $(SFIMOD).o : $(SFIMOD).f90   $(LPRCM) $(LIDXM) $(LOMDM) $(LVARM) \
                               $(LERRM)
 $(PXCMOD).o : $(PXCMOD).f90   $(LPRCM) $(LERRM) $(LPARM) $(LIDXM) \
@@ -172,7 +169,7 @@ fitting_functions.o         : fitting_functions.f90               \
 fitting_loops.o             : fitting_loops.f90                   \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
                               $(LOMDM) $(LERRM) $(LSFIM) $(LRRFM) \
-                              $(LAMFM) $(LH5SM) $(LPFIM)
+                              $(LH5SM) $(LPFIM)
 
 gauss.o                     : gauss.f90                           \
                               $(LPRCM)
@@ -180,7 +177,7 @@ gauss.o                     : gauss.f90                           \
 he5_output_tools.o          : he5_output_tools.f90                \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
                               $(LOMDM) $(LERRM) $(LH5SM) $(LH5FM) \
-                              $(LAMFM) $(LRRFM)
+                              $(LRRFM)
 
 integration_routines.o      : integration_routines.f90            \
                               $(LPRCM) $(LERRM) 
@@ -199,7 +196,7 @@ omi_pge_fitting_aux.o       : omi_pge_fitting_aux.f90             \
 omi_pge_fitting_process.o   : omi_pge_fitting_process.f90         \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
                               $(LOMDM) $(LERRM) $(LH5SM) $(LH5FM) \
-                              $(LMETM) $(LAMFM) $(LSWCM) $(LXTDM) \
+                              $(LMETM) $(LSWCM) $(LXTDM) \
                               $(LSOCM) $(LRRFM) $(LPFIM) $(HDF5R) \
                               $(LPXCM)
 
@@ -209,7 +206,7 @@ prepare_databases.o         : prepare_databases.f90               \
 
 omi_pge_postprocessing.o    : omi_pge_postprocessing.f90          \
                               $(LPRCM) $(LH5SM) $(LPXCM) $(LXTDM) \
-                              $(LAMFM) $(LERRM) $(LIDXM) $(LRSCM) \
+                              $(LERRM) $(LIDXM) $(LRSCM) \
                               $(LWFAM)
 
 omi_pge_swathline_loop.o    : omi_pge_swathline_loop.f90          \
@@ -231,7 +228,7 @@ radiance_wavcal.o           : radiance_wavcal.f90                 \
 read_fitting_control_file.o : read_fitting_control_file.f90       \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
                               $(LOMDM) $(LXTDM) $(LERRM) $(LRRFM) \
-                              $(LPFIM) $(LCASM) $(LAMFM) $(LWFAM)
+                              $(LPFIM) $(LCASM) $(LWFAM)
 
 read_pcf_file.o             : read_pcf_file.f90                   \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \

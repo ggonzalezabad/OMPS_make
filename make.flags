@@ -4,8 +4,9 @@
 FC         = gfortran -static -fbacktrace -fPIC -cpp
 CC         = gcc
 FFLAGSopt  = -O3
-FFLAGSdbg  = -g -ggdb -Wall -Wextra -pedantic -fcheck=all -ftrapv \
-             -ffpe-summary=invalid,zero,overflow,underflow,inexact,denormal
+FFLAGSdbg  = -g -ggdb -Wall -Wextra -pedantic -fcheck=all -ftrapv -Wno-compare-reals \
+             -ffpe-summary=invalid,zero,overflow,underflow,inexact,denormal \
+             -Wno-conversion -Wno-character-truncation -Wno-intrinsic-shadow
 FFLAGSprof = -O3 -pg
 CFLAGS     = -O3 -DLINUX -Df2cFortran
 

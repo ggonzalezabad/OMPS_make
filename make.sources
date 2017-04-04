@@ -20,7 +20,6 @@ H5FMOD = OMSAO_he5_datafields_module
 METMOD = OMSAO_metadata_module
 SFIMOD = OMSAO_slitfunction_module
 NLSMOD = OMSAO_elsunc_fitting_module
-AMFMOD = OMSAO_amf_module
 WFAMOD = OMSAO_wfamf_module
 PXCMOD = OMSAO_pixelcorner_module
 RRFMOD = OMSAO_radiance_ref_module
@@ -59,7 +58,6 @@ F90SOURCES = readh5dataset.f90             \
              $(METMOD).f90                 \
              $(NLSMOD).f90                 \
              $(SFIMOD).f90                 \
-             $(AMFMOD).f90                 \
              $(WFAMOD).f90                 \
              $(PXCMOD).f90                 \
              $(RRFMOD).f90                 \
@@ -123,7 +121,6 @@ OBJECTS = readh5dataset.o             \
           $(METMOD).o                 \
           $(NLSMOD).o                 \
           $(SFIMOD).o                 \
-          $(AMFMOD).o                 \
           $(WFAMOD).o                 \
           $(PXCMOD).o                 \
           $(RRFMOD).o                 \
