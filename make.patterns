@@ -204,11 +204,6 @@ prepare_databases.o         : prepare_databases.f90               \
                               $(LPRCM) $(LVARM) $(LERRM) $(LIDXM) \
                               $(LPARM)
 
-omi_pge_postprocessing.o    : omi_pge_postprocessing.f90          \
-                              $(LPRCM) $(LH5SM) $(LPXCM) $(LXTDM) \
-                              $(LERRM) $(LIDXM) $(LRSCM) \
-                              $(LWFAM)
-
 omi_pge_swathline_loop.o    : omi_pge_swathline_loop.f90          \
                               $(LPRCM) $(LPARM) $(LIDXM) $(LVARM) \
                               $(LOMDM) $(LXTDM) $(LPFIM) $(LERRM) \
