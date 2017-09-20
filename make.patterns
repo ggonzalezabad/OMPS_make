@@ -13,9 +13,6 @@ $(L1HMOD).o:
 $(L1ZMOD).o:
 	$(FC) -c $(FFLAGS) $(IFLAGS) $<
 	mv -f *.o *.mod $(PGETMPDIR)
-$(L1RMOD).o:
-	$(FC) -c $(FFLAGS) $(IFLAGS) $<
-	mv -f *.o *.mod $(PGETMPDIR)
 .c.o:
 	$(CC) -c $(CFLAGS) $(CINCFLGS) $<
 	mv -f $*.o $(PGETMPDIR)
@@ -74,7 +71,6 @@ LSWCM = $(SWCMOD).o
 LXTDM = $(XTDMOD).o
 LSOCM = $(SOCMOD).o
 LPFIM = $(PFIMOD).o
-L1BRM = $(L1RMOD).o
 LWFAM = $(WFAMOD).o
 LSMAM = $(SMAMOD).o
 LRSCM = $(RSCMOD).o
@@ -91,10 +87,8 @@ SLTOM = $(SLTMOD).o
 # L1b Reader and SMF sources
 # --------------------------
 OMI_SMF_setmsg.o : OMI_SMF_setmsg.c omi_smf.h
-OMI_L1B_reader.o : OMI_L1B_reader.c omi_smf.h l1b_reader.h PGS_OMI_1900.h
 $(L1HMOD).o      : $(L1HMOD).f90
 $(L1ZMOD).o      : $(L1ZMOD).f90 
-$(L1RMOD).o      : $(L1RMOD).f90 PGS_OMI_1900.f $(L1HMOD).o $(L1ZMOD).o
 
 # ----------------
 # True PGE sources
@@ -116,10 +110,9 @@ $(WFAMOD).o : $(WFAMOD).f90   $(LPRCM) $(LERRM) $(LPARM) $(LH5SM) \
 $(SFIMOD).o : $(SFIMOD).f90   $(LPRCM) $(LIDXM) $(LOMDM) $(LVARM) \
                               $(LERRM)
 $(PXCMOD).o : $(PXCMOD).f90   $(LPRCM) $(LERRM) $(LPARM) $(LIDXM) \
-                              $(LOMDM) $(L1BRM) $(LH5SM) $(LNLSM)
+                              $(LOMDM) $(LH5SM) $(LNLSM)
 $(RRFMOD).o : $(RRFMOD).f90   $(LPRCM) $(LPARM) $(LVARM) $(LOMDM) \
-                              $(LERRM) $(LIDXM) $(LSFIM) $(LPFIM) \
-                              $(L1BRM)
+                              $(LERRM) $(LIDXM) $(LSFIM) $(LPFIM)
 $(SWCMOD).o : $(SWCMOD).f90   $(LPRCM) $(LIDXM) $(LERRM) $(LPARM) \
                               $(LVARM) $(LOMDM) $(LSFIM)
 $(XTDMOD).o : $(XTDMOD).f90   $(LPRCM) $(LIDXM) $(LERRM) $(LPARM) \

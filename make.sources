@@ -7,7 +7,6 @@
 # -------------------------------------
 L1HMOD = hdfeos4_parameters
 L1ZMOD = Szoom_Parameter_Module
-L1RMOD = L1B_Reader_class
 PRCMOD = OMSAO_precision_module
 IDXMOD = OMSAO_indices_module
 PARMOD = OMSAO_parameters_module
@@ -36,7 +35,6 @@ SLTMOD = OMSAO_OMPS_SLIT_READER
 
 
 CSOURCES   = OMI_SMF_setmsg.c              \
-             OMI_L1B_reader.c              \
              unbufferSTDOUT.c
 
 
@@ -44,7 +42,6 @@ F90SOURCES = readh5dataset.f90             \
              $(PRCMOD).f90                 \
              $(L1HMOD).f90                 \
              $(L1ZMOD).f90                 \
-             $(L1RMOD).f90                 \
              $(CASMOD).f90                 \
              $(IDXMOD).f90                 \
              $(PARMOD).f90                 \
@@ -106,7 +103,6 @@ OBJECTS = readh5dataset.o             \
           $(PRCMOD).o                 \
           $(L1HMOD).o                 \
           $(L1ZMOD).o                 \
-          $(L1RMOD).o                 \
           $(CASMOD).o                 \
           $(IDXMOD).o                 \
           $(PARMOD).o                 \
@@ -159,7 +155,6 @@ OBJECTS = readh5dataset.o             \
           undersample.o               \
           unbufferSTDOUT.o            \
           OMI_SMF_setmsg.o            \
-          OMI_L1B_reader.o            \
           omps_data_to_omi_variables.o
 
 #\
