@@ -77,6 +77,7 @@ LRSCM = $(RSCMOD).o
 LLINM = $(LINMOD).o
 HDF5R = $(HDFMOD).o
 SLTOM = $(SLTMOD).o
+CTRFM = $(CTFMOD).O
 
 # =====================================================
 #  Various DEPENDENCIES, which tell Make  to recompile
@@ -126,6 +127,8 @@ $(SMAMOD).o : $(SMAMOD).f90   $(LPRCM) $(LOMDM) $(LERRM) $(LVARM) \
                               $(LIDXM) $(LH5SM)
 $(RSCMOD).o : $(RSCMOD).f90   $(LPRCM) $(LERRM) $(LIDXM) $(LVARM) \
                               $(LRRFM) $(LH5SM) $(LWFAM)
+$(CTFMOD).o : $(CTFMOD).f90   $(LPRCM) $(LPARM) $(LIDXM) $(LVARM) \
+                              $(LOMDM) $(LERRM) $(LCASM)
 $(LINMOD).o : $(LINMOD).f90
 
 readh5dataset.o : readh5dataset.f90
