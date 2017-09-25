@@ -33,6 +33,7 @@ LINMOD = OMSAO_linterpolation_module
 HDFMOD = OMSAO_OMPS_READER
 SLTMOD = OMSAO_OMPS_SLIT_READER
 CTFMOD = OMSAO_control_file_module
+PCFMOD = OMSAO_pcf_file_module
 
 
 CSOURCES   = OMI_SMF_setmsg.c              \
@@ -68,6 +69,7 @@ F90SOURCES = readh5dataset.f90             \
              $(LINMOD).f90                 \
              $(HDFMOD).f90                 \
              $(CTFMOD).f90                 \
+             $(PCFMOD).f90                 \
              OMSAO_main.f90                \
 	     create_radiance_reference.f90 \
              angle_sat2toa.f90             \
@@ -85,7 +87,6 @@ F90SOURCES = readh5dataset.f90             \
              prepare_databases.f90         \
              radiance_fit.f90              \
              radiance_wavcal.f90           \
-             read_pcf_file.f90             \
              read_reference_spectra.f90    \
              sao_pge_utils.f90             \
              SLATEC_davint.f90             \
@@ -129,6 +130,7 @@ OBJECTS = readh5dataset.o             \
           $(LINMOD).o                 \
           $(HDFMOD).o                 \
           $(CTFMOD).o                 \
+          $(PCFMOD).o                 \
           OMSAO_main.o                \
 	  create_radiance_reference.o \
           angle_sat2toa.o             \
@@ -146,7 +148,6 @@ OBJECTS = readh5dataset.o             \
           prepare_databases.o         \
           radiance_fit.o              \
           radiance_wavcal.o           \
-          read_pcf_file.o             \
           read_reference_spectra.o    \
           sao_pge_utils.o             \
           SLATEC_davint.o             \

@@ -77,7 +77,8 @@ LRSCM = $(RSCMOD).o
 LLINM = $(LINMOD).o
 HDF5R = $(HDFMOD).o
 SLTOM = $(SLTMOD).o
-CTRFM = $(CTFMOD).O
+LCTRM = $(CTFMOD).o
+LPCFM = $(PCFMOD).o
 
 # =====================================================
 #  Various DEPENDENCIES, which tell Make  to recompile
@@ -129,6 +130,8 @@ $(RSCMOD).o : $(RSCMOD).f90   $(LPRCM) $(LERRM) $(LIDXM) $(LVARM) \
                               $(LRRFM) $(LH5SM) $(LWFAM)
 $(CTFMOD).o : $(CTFMOD).f90   $(LPRCM) $(LPARM) $(LIDXM) $(LVARM) \
                               $(LOMDM) $(LERRM) $(LCASM)
+$(PCFMOD).o : $(PCFMOD).f90   $(LPRCM) $(LPARM) $(LIDXM) $(LVARM) \
+                              $(LMETM) $(LERRM) $(LH5SM) $(LCTRM)
 $(LINMOD).o : $(LINMOD).f90
 
 readh5dataset.o : readh5dataset.f90
@@ -144,7 +147,7 @@ $(MAIN).o                   : $(MAIN).f90                         \
 
 OMSAO_main.o                : OMSAO_main.f90                      \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
-                              $(LERRM) $(LH5FM) $(LSFIM)
+                              $(LERRM) $(LH5FM) $(LSFIM) $(LPCFM)
 
 create_radiance_reference.o : create_radiance_reference.f90       \
 			      $(HDF5R) $(LERRM) $(LPRCM) $(LOMDM)
@@ -220,11 +223,6 @@ read_fitting_control_file.o : read_fitting_control_file.f90       \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
                               $(LOMDM) $(LXTDM) $(LERRM) $(LRRFM) \
                               $(LPFIM) $(LCASM) $(LWFAM)
-
-read_pcf_file.o             : read_pcf_file.f90                   \
-                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
-                              $(LERRM) $(LH5SM) $(LOMDM) $(LMETM) \
-                              $(LRRFM) $(LPFIM) $(LWFAM)
 
 read_reference_spectra.o    : read_reference_spectra.f90          \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
