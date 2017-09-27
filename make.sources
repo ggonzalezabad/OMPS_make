@@ -12,7 +12,7 @@ IDXMOD = OMSAO_indices_module
 PARMOD = OMSAO_parameters_module
 MEDMOD = OMSAO_median_module
 VARMOD = OMSAO_variables_module
-OMDMOD = OMSAO_omidata_module
+OMDMOD = OMSAO_data_module.f90
 ERRMOD = OMSAO_errstat_module
 H5SMOD = OMSAO_he5_module
 H5FMOD = OMSAO_he5_datafields_module
@@ -34,6 +34,7 @@ HDFMOD = OMSAO_OMPS_READER
 SLTMOD = OMSAO_OMPS_SLIT_READER
 CTFMOD = OMSAO_control_file_module
 PCFMOD = OMSAO_pcf_file_module
+RSPMOD = OMSAO_reference_spectra
 
 
 CSOURCES   = OMI_SMF_setmsg.c              \
@@ -59,7 +60,6 @@ F90SOURCES = readh5dataset.f90             \
              $(SFIMOD).f90                 \
              $(WFAMOD).f90                 \
              $(PXCMOD).f90                 \
-             $(RRFMOD).f90                 \
              $(SWCMOD).f90                 \
              $(XTDMOD).f90                 \
              $(SOCMOD).f90                 \
@@ -68,10 +68,11 @@ F90SOURCES = readh5dataset.f90             \
              $(RSCMOD).f90                 \
              $(LINMOD).f90                 \
              $(HDFMOD).f90                 \
+             $(RRFMOD).f90                 \
              $(CTFMOD).f90                 \
              $(PCFMOD).f90                 \
+             $(RSPMOD).f90                 \
              OMSAO_main.f90                \
-	     create_radiance_reference.f90 \
              angle_sat2toa.f90             \
              dataspline.f90                \
              ezspline_interpolation.f90    \
@@ -87,7 +88,6 @@ F90SOURCES = readh5dataset.f90             \
              prepare_databases.f90         \
              radiance_fit.f90              \
              radiance_wavcal.f90           \
-             read_reference_spectra.f90    \
              sao_pge_utils.f90             \
              SLATEC_davint.f90             \
              specfit.f90                   \
@@ -120,7 +120,6 @@ OBJECTS = readh5dataset.o             \
           $(SFIMOD).o                 \
           $(WFAMOD).o                 \
           $(PXCMOD).o                 \
-          $(RRFMOD).o                 \
           $(SWCMOD).o                 \
           $(XTDMOD).o                 \
           $(SOCMOD).o                 \
@@ -129,10 +128,11 @@ OBJECTS = readh5dataset.o             \
           $(RSCMOD).o                 \
           $(LINMOD).o                 \
           $(HDFMOD).o                 \
+          $(RRFMOD).o                 \
           $(CTFMOD).o                 \
           $(PCFMOD).o                 \
+          $(RSPMOD).o                 \
           OMSAO_main.o                \
-	  create_radiance_reference.o \
           angle_sat2toa.o             \
           dataspline.o                \
           ezspline_interpolation.o    \
@@ -148,7 +148,6 @@ OBJECTS = readh5dataset.o             \
           prepare_databases.o         \
           radiance_fit.o              \
           radiance_wavcal.o           \
-          read_reference_spectra.o    \
           sao_pge_utils.o             \
           SLATEC_davint.o             \
           specfit.o                   \

@@ -75,10 +75,11 @@ LWFAM = $(WFAMOD).o
 LSMAM = $(SMAMOD).o
 LRSCM = $(RSCMOD).o
 LLINM = $(LINMOD).o
-HDF5R = $(HDFMOD).o
+LHDFM = $(HDFMOD).o
 SLTOM = $(SLTMOD).o
 LCTRM = $(CTFMOD).o
 LPCFM = $(PCFMOD).o
+LRSPM = $(RSPMOD).o
 
 # =====================================================
 #  Various DEPENDENCIES, which tell Make  to recompile
@@ -114,7 +115,8 @@ $(SFIMOD).o : $(SFIMOD).f90   $(LPRCM) $(LIDXM) $(LOMDM) $(LVARM) \
 $(PXCMOD).o : $(PXCMOD).f90   $(LPRCM) $(LERRM) $(LPARM) $(LIDXM) \
                               $(LOMDM) $(LH5SM) $(LNLSM)
 $(RRFMOD).o : $(RRFMOD).f90   $(LPRCM) $(LPARM) $(LVARM) $(LOMDM) \
-                              $(LERRM) $(LIDXM) $(LSFIM) $(LPFIM)
+                              $(LERRM) $(LIDXM) $(LSFIM) $(LPFIM) \
+                              $(LHDFM)
 $(SWCMOD).o : $(SWCMOD).f90   $(LPRCM) $(LIDXM) $(LERRM) $(LPARM) \
                               $(LVARM) $(LOMDM) $(LSFIM)
 $(XTDMOD).o : $(XTDMOD).f90   $(LPRCM) $(LIDXM) $(LERRM) $(LPARM) \
@@ -123,7 +125,6 @@ $(XTDMOD).o : $(XTDMOD).f90   $(LPRCM) $(LIDXM) $(LERRM) $(LPARM) \
 $(SOCMOD).o : $(SOCMOD).f90   $(LPRCM) $(LOMDM) $(LERRM) $(LPARM)
 $(PFIMOD).o : $(PFIMOD).f90   $(LPRCM) $(LIDXM) $(LOMDM) $(LERRM) \
                               $(LPARM) $(LVARM) $(LH5SM)
-
 $(SMAMOD).o : $(SMAMOD).f90   $(LPRCM) $(LOMDM) $(LERRM) $(LVARM) \
                               $(LIDXM) $(LH5SM)
 $(RSCMOD).o : $(RSCMOD).f90   $(LPRCM) $(LERRM) $(LIDXM) $(LVARM) \
@@ -132,13 +133,14 @@ $(CTFMOD).o : $(CTFMOD).f90   $(LPRCM) $(LPARM) $(LIDXM) $(LVARM) \
                               $(LOMDM) $(LERRM) $(LCASM)
 $(PCFMOD).o : $(PCFMOD).f90   $(LPRCM) $(LPARM) $(LIDXM) $(LVARM) \
                               $(LMETM) $(LERRM) $(LH5SM) $(LCTRM)
+$(PCFMOD).o : $(PCFMOD).f90   $(LPRCM) $(LPARM) $(LIDXM) $(LVARM) \
+                              $(LMETM) $(LERRM) $(LH5SM) $(LCTRM)
+$(RSPMOD).o : $(RSPMOD).f90   $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
+                              $(LERRM) $(LH5FM) $(LSOCM) $(LOMDM)
 $(LINMOD).o : $(LINMOD).f90
-
-readh5dataset.o : readh5dataset.f90
-
-$(HDFMOD).o : $(HDFMOD).f90
-
-$(SLTMOD).o : $(SLTMOD).f90 readh5dataset.f90
+$(SLTMOD).o : $(SLTMOD).f90   readh5dataset.o
+$(HDFMOD).o : $(HDFMOD).f90   $(LERRM) $(LPRCM) $(LOMDM) \
+                              readh5dataset.o
 
 $(MAIN).o                   : $(MAIN).f90                         \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
@@ -147,10 +149,10 @@ $(MAIN).o                   : $(MAIN).f90                         \
 
 OMSAO_main.o                : OMSAO_main.f90                      \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
-                              $(LERRM) $(LH5FM) $(LSFIM) $(LPCFM)
+                              $(LERRM) $(LH5FM) $(LSFIM) $(LPCFM) \
+                              $(LRSPM)
 
-create_radiance_reference.o : create_radiance_reference.f90       \
-			      $(HDF5R) $(LERRM) $(LPRCM) $(LOMDM)
+readh5dataset.o             : readh5dataset.f90
 
 angle_sat2toa.o             : angle_sat2toa.f90                   \
                               $(LPRCM) $(LPARM)
@@ -195,9 +197,8 @@ omi_pge_fitting_aux.o       : omi_pge_fitting_aux.f90             \
 omi_pge_fitting_process.o   : omi_pge_fitting_process.f90         \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
                               $(LOMDM) $(LERRM) $(LH5SM) $(LH5FM) \
-                              $(LMETM) $(LSWCM) $(LXTDM) \
-                              $(LSOCM) $(LRRFM) $(LPFIM) $(HDF5R) \
-                              $(LPXCM)
+                              $(LMETM) $(LSWCM) $(LXTDM) $(LSOCM) \
+			      $(LRRFM) $(LPFIM) $(LHDFM) $(LPXCM)
 
 prepare_databases.o         : prepare_databases.f90               \
                               $(LPRCM) $(LVARM) $(LERRM) $(LIDXM) \
@@ -223,10 +224,6 @@ read_fitting_control_file.o : read_fitting_control_file.f90       \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
                               $(LOMDM) $(LXTDM) $(LERRM) $(LRRFM) \
                               $(LPFIM) $(LCASM) $(LWFAM)
-
-read_reference_spectra.o    : read_reference_spectra.f90          \
-                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
-                              $(LERRM) $(LH5FM) $(LSOCM) $(LOMDM)
 
 sao_pge_utils.o             : sao_pge_utils.f90                   \
                               $(LPRCM) $(LIDXM) $(LVARM) $(LERRM) \
