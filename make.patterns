@@ -209,7 +209,7 @@ omi_pge_swathline_loop.o    : omi_pge_swathline_loop.f90          \
                               $(LOMDM) $(LXTDM) $(LPFIM) $(LERRM) \
                               $(LRRFM)
 
-omps_data_to_omi_variables.o : omps_data_to_omi_variables.f90     \
+omps_to_data_variables.o : omps_to_data_variables.f90     \
                                $(LOMDM)
 
 radiance_fit.o              : radiance_fit.f90                    \

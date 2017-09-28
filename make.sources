@@ -94,7 +94,7 @@ F90SOURCES = readh5dataset.f90             \
              spectra.f90                   \
              subtract_cubic.f90            \
              undersample.f90               \
-             omps_data_to_omi_variables.f90
+             omps_to_data_variables.f90
 
 #\
 #             he5_input_tools.f90           \
@@ -156,7 +156,7 @@ OBJECTS = readh5dataset.o             \
           undersample.o               \
           unbufferSTDOUT.o            \
           OMI_SMF_setmsg.o            \
-          omps_data_to_omi_variables.o
+          omps_to_data_variables.o
 
 #\
 #          $(LOCALLIB)(he5_input_tools.o)           \
