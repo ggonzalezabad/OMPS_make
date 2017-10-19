@@ -78,7 +78,6 @@ F90SOURCES = readh5dataset.f90             \
              ezspline_interpolation.f90    \
              fitting_functions.f90         \
              fitting_loops.f90             \
-             gauss.f90                     \
              he5_output_tools.f90          \
              integration_routines.f90      \
              metadata_tools.f90            \
@@ -138,7 +137,6 @@ OBJECTS = readh5dataset.o             \
           ezspline_interpolation.o    \
           fitting_functions.o         \
           fitting_loops.o             \
-          gauss.o                     \
           he5_output_tools.o          \
           integration_routines.o      \
           metadata_tools.o            \

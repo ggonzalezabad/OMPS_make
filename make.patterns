@@ -172,13 +172,10 @@ fitting_loops.o             : fitting_loops.f90                   \
                               $(LOMDM) $(LERRM) $(LSFIM) $(LRRFM) \
                               $(LH5SM) $(LPFIM)
 
-gauss.o                     : gauss.f90                           \
-                              $(LPRCM)
-
 he5_output_tools.o          : he5_output_tools.f90                \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
                               $(LOMDM) $(LERRM) $(LH5SM) $(LH5FM) \
-                              $(LRRFM)
+                              $(LRRFM) $(LWFAM)
 
 integration_routines.o      : integration_routines.f90            \
                               $(LPRCM) $(LERRM) 
