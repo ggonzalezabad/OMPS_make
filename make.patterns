@@ -76,10 +76,11 @@ LSMAM = $(SMAMOD).o
 LRSCM = $(RSCMOD).o
 LLINM = $(LINMOD).o
 LHDFM = $(HDFMOD).o
-SLTOM = $(SLTMOD).o
+LKAIM = $(KAIMOD).o
 LCTRM = $(CTFMOD).o
 LPCFM = $(PCFMOD).o
 LRSPM = $(RSPMOD).o
+LDABM = $(DABMOD).o
 
 # =====================================================
 #  Various DEPENDENCIES, which tell Make  to recompile
@@ -101,15 +102,17 @@ $(CASMOD).o : $(CASMOD).f90
 $(PARMOD).o : $(PARMOD).f90   $(LPRCM)
 $(IDXMOD).o : $(IDXMOD).f90   $(LPRCM) $(LPARM)
 $(MEDMOD).o : $(MEDMOD).f90   $(LPRCM)
-$(VARMOD).o : $(VARMOD).f90   $(LPRCM) $(LIDXM) $(LPARM) $(LOMDM)
-$(OMDMOD).o : $(OMDMOD).f90   $(LPRCM) $(LIDXM) $(LPARM)
+$(VARMOD).o : $(VARMOD).f90   $(LPRCM) $(LIDXM) $(LPARM)
+$(OMDMOD).o : $(OMDMOD).f90   $(LPRCM) $(LIDXM) $(LPARM) $(LVARM)
 $(ERRMOD).o : $(ERRMOD).f90   $(LPRCM) $(LPARM) $(PGEPGSCMP)
+$(DABMOD).o : $(DABMOD).f90   $(LPRCM) $(LPARM  $(LVARM) $(LOMDM) \
+                              $(LERRM)
 $(H5SMOD).o : $(H5SMOD).f90   $(LPRCM) $(LIDXM) $(LPARM) $(LERRM)
 $(H5FMOD).o : $(H5FMOD).f90   $(LPRCM) $(LIDXM) $(LPARM) $(LH5SM)
 $(METMOD).o : $(METMOD).f90   $(LPRCM) $(LIDXM) $(LPARM)
 $(NLSMOD).o : $(NLSMOD).f90   $(LPRCM)
 $(WFAMOD).o : $(WFAMOD).f90   $(LPRCM) $(LERRM) $(LPARM) $(LH5SM) \
-                               $(LLINM) readh5dataset.f90
+                              $(LLINM) readh5dataset.f90
 $(SFIMOD).o : $(SFIMOD).f90   $(LPRCM) $(LIDXM) $(LOMDM) $(LVARM) \
                               $(LERRM)
 $(PXCMOD).o : $(PXCMOD).f90   $(LPRCM) $(LERRM) $(LPARM) $(LIDXM) \
@@ -138,7 +141,6 @@ $(PCFMOD).o : $(PCFMOD).f90   $(LPRCM) $(LPARM) $(LIDXM) $(LVARM) \
 $(RSPMOD).o : $(RSPMOD).f90   $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
                               $(LERRM) $(LH5FM) $(LSOCM) $(LOMDM)
 $(LINMOD).o : $(LINMOD).f90
-$(SLTMOD).o : $(SLTMOD).f90   readh5dataset.o
 $(HDFMOD).o : $(HDFMOD).f90   $(LERRM) $(LPRCM) $(LOMDM) \
                               readh5dataset.o
 
@@ -195,7 +197,8 @@ omi_pge_fitting_process.o   : omi_pge_fitting_process.f90         \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
                               $(LOMDM) $(LERRM) $(LH5SM) $(LH5FM) \
                               $(LMETM) $(LSWCM) $(LXTDM) $(LSOCM) \
-			      $(LRRFM) $(LPFIM) $(LHDFM) $(LPXCM)
+			      $(LRRFM) $(LPFIM) $(LHDFM) $(LPXCM) \
+                              $(LDABM)
 
 prepare_databases.o         : prepare_databases.f90               \
                               $(LPRCM) $(LVARM) $(LERRM) $(LIDXM) \
