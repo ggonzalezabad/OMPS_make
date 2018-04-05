@@ -105,7 +105,7 @@ $(MEDMOD).o : $(MEDMOD).f90   $(LPRCM)
 $(VARMOD).o : $(VARMOD).f90   $(LPRCM) $(LIDXM) $(LPARM)
 $(OMDMOD).o : $(OMDMOD).f90   $(LPRCM) $(LIDXM) $(LPARM) $(LVARM)
 $(ERRMOD).o : $(ERRMOD).f90   $(LPRCM) $(LPARM) $(PGEPGSCMP)
-$(DABMOD).o : $(DABMOD).f90   $(LPRCM) $(LPARM  $(LVARM) $(LOMDM) \
+$(DABMOD).o : $(DABMOD).f90   $(LPRCM) $(LPARM) $(LVARM) $(LOMDM) \
                               $(LERRM)
 $(H5SMOD).o : $(H5SMOD).f90   $(LPRCM) $(LIDXM) $(LPARM) $(LERRM)
 $(H5FMOD).o : $(H5FMOD).f90   $(LPRCM) $(LIDXM) $(LPARM) $(LH5SM)
