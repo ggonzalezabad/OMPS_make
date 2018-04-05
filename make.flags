@@ -12,28 +12,33 @@ CFLAGS     = -O3 -DLINUX -Df2cFortran
 
 # System libraries
 # ----------------
-ADDLIBS    = -lsz -lm -ldl
+ADDLIBS    = -lsz -lm -ldl 
 
 # PSPLINE library
 # ---------------
 PSPLINEMOD = $(OMIUTIL)/mod
 PSPLINELIB = $(OMIUTIL)/lib
 
+# Kai libraries
+#--------------
+KAILIB = /data/tempo2/ggonzale/OMPS_source/Kai/OMPS_L1B/tmp
+KAILIBS = -lL1B_RD
+
 # Include folders
 # ---------------
 IFLAGS   = -I$(OMIUTIL)/include -I$(PSPLINEMOD) \
            -I$(PGETMPDIR) -I$(PGSINC) \
-           -I$(HDFEOS_INC) -I$(HDFEOS5_INC)
+           -I$(HDFEOS_INC) -I$(HDFEOS5_INC) -I$(KAILIB)
 CINCFLGS = -I$(PGSINC) -I$(HDFINC) -I$(HDFEOS_INC) -I$(PGETMPDIR)
 
 # Linking folders
 # ---------------
 LFLAGS = -L$(OMIUTIL)/lib -L$(HDFEOS_LIB) \
-         -L$(HDFEOS5_LIB) -L$(PGSLIB)
+         -L$(HDFEOS5_LIB) -L$(PGSLIB) -L$(KAILIB)
 
 # Libraries
 # ---------
-LIBS   = $(PSPLINELIBS) $(NETCDFLIBS) \
+LIBS   = $(KAILIBS) $(PSPLINELIBS) $(NETCDFLIBS) \
          $(PGSLIBS) $(HE5LIBS) \
          $(HE4LIBS) $(ADDLIBS)
 
