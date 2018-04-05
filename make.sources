@@ -31,11 +31,11 @@ SMAMOD = OMSAO_solmonthave_module
 RSCMOD = OMSAO_Reference_sector_module
 LINMOD = OMSAO_linterpolation_module
 HDFMOD = OMSAO_OMPS_READER
-SLTMOD = OMSAO_OMPS_SLIT_READER
 CTFMOD = OMSAO_control_file_module
 PCFMOD = OMSAO_pcf_file_module
 RSPMOD = OMSAO_reference_spectra
-
+KAIMOD = OMPS_macroSlitNOAA_m
+DABMOD = OMSAO_database_module
 
 CSOURCES   = OMI_SMF_setmsg.c              \
              unbufferSTDOUT.c
@@ -52,9 +52,10 @@ F90SOURCES = readh5dataset.f90             \
              $(VARMOD).f90                 \
              $(OMDMOD).f90                 \
              $(ERRMOD).f90                 \
+	     $(DABMOD).f90                 \
              $(H5SMOD).f90                 \
              $(H5FMOD).f90                 \
-	     $(SLTMOD).f90                 \
+	     $(KAIMOD).f90                 \
              $(METMOD).f90                 \
              $(NLSMOD).f90                 \
              $(SFIMOD).f90                 \
@@ -111,9 +112,10 @@ OBJECTS = readh5dataset.o             \
           $(VARMOD).o                 \
           $(OMDMOD).o                 \
           $(ERRMOD).o                 \
+	  $(DABMOD).o                 \
           $(H5SMOD).o                 \
           $(H5FMOD).o                 \
-	  $(SLTMOD).o                 \
+	  $(KAIMOD).o                 \
           $(METMOD).o                 \
           $(NLSMOD).o                 \
           $(SFIMOD).o                 \
