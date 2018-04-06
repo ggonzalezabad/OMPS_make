@@ -85,7 +85,6 @@ F90SOURCES = readh5dataset.f90             \
              omi_pge_fitting_aux.f90       \
 	     omi_pge_fitting_process.f90   \
              omi_pge_swathline_loop.f90    \
-             prepare_databases.f90         \
              radiance_fit.f90              \
              radiance_wavcal.f90           \
              sao_pge_utils.f90             \
@@ -145,7 +144,6 @@ OBJECTS = readh5dataset.o             \
           omi_pge_fitting_aux.o       \
           omi_pge_fitting_process.o   \
           omi_pge_swathline_loop.o    \
-          prepare_databases.o         \
           radiance_fit.o              \
           radiance_wavcal.o           \
           sao_pge_utils.o             \
