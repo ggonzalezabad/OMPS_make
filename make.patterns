@@ -200,10 +200,6 @@ omi_pge_fitting_process.o   : omi_pge_fitting_process.f90         \
 			      $(LRRFM) $(LPFIM) $(LHDFM) $(LPXCM) \
                               $(LDABM)
 
-prepare_databases.o         : prepare_databases.f90               \
-                              $(LPRCM) $(LVARM) $(LERRM) $(LIDXM) \
-                              $(LPARM)
-
 omi_pge_swathline_loop.o    : omi_pge_swathline_loop.f90          \
                               $(LPRCM) $(LPARM) $(LIDXM) $(LVARM) \
                               $(LOMDM) $(LXTDM) $(LPFIM) $(LERRM) \
