@@ -52,13 +52,13 @@ F90SOURCES = readh5dataset.f90             \
              $(VARMOD).f90                 \
              $(OMDMOD).f90                 \
              $(ERRMOD).f90                 \
-	     $(DABMOD).f90                 \
              $(H5SMOD).f90                 \
              $(H5FMOD).f90                 \
 	     $(KAIMOD).f90                 \
              $(METMOD).f90                 \
              $(NLSMOD).f90                 \
              $(SFIMOD).f90                 \
+	     $(DABMOD).f90                 \
              $(WFAMOD).f90                 \
              $(PXCMOD).f90                 \
              $(SWCMOD).f90                 \
@@ -111,13 +111,13 @@ OBJECTS = readh5dataset.o             \
           $(VARMOD).o                 \
           $(OMDMOD).o                 \
           $(ERRMOD).o                 \
-	  $(DABMOD).o                 \
           $(H5SMOD).o                 \
           $(H5FMOD).o                 \
 	  $(KAIMOD).o                 \
           $(METMOD).o                 \
           $(NLSMOD).o                 \
           $(SFIMOD).o                 \
+	  $(DABMOD).o                 \
           $(WFAMOD).o                 \
           $(PXCMOD).o                 \
           $(SWCMOD).o                 \
