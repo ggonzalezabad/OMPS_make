@@ -92,7 +92,6 @@ F90SOURCES = readh5dataset.f90             \
              specfit.f90                   \
              spectra.f90                   \
              subtract_cubic.f90            \
-             undersample.f90               \
              omps_to_data_variables.f90
 
 #\
@@ -151,7 +150,6 @@ OBJECTS = readh5dataset.o             \
           specfit.o                   \
           spectra.o                   \
           subtract_cubic.o            \
-          undersample.o               \
           unbufferSTDOUT.o            \
           OMI_SMF_setmsg.o            \
           omps_to_data_variables.o

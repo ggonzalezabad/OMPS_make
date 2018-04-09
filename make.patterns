@@ -241,10 +241,6 @@ subtract_cubic.o            : subtract_cubic.f90                  \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
                               $(LNLSM)
 
-undersample.o               : undersample.f90                     \
-                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
-                              $(LERRM) $(LSFIM)
-
 ioerror.o                   : ioerror.F
 
 # -----------------
