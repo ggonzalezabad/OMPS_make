@@ -29,7 +29,7 @@ links:
             if [[ ! -a $$PGEIODIR/$$FILE ]]; then \
                ln -s $$UTDATAINS/$$FILE $$PGEIODIR; fi; done
 	mkdir -p ../tbl
-	@for DATFILE in `ls $$OMISAOSHARED/tbl | grep -e dat -e he5`; do \
+	@for DATFILE in `ls $$OMISAOSHARED/tbl | grep -e dat -e he5 -e hdf5`; do \
             if [[ ! -a ../tbl/$$DATFILE ]]; then  \
                ln -s $$OMISAOSHARED/tbl/$$DATFILE ../tbl; fi; done
 
