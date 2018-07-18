@@ -182,11 +182,6 @@ he5_output_tools.o          : he5_output_tools.f90                \
 integration_routines.o      : integration_routines.f90            \
                               $(LPRCM) $(LERRM) 
 
-metadata_tools.o            : metadata_tools.f90                  \
-                              $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
-                              $(LERRM) $(LMETM) $(LH5SM) $(LOMDM) \
-                              $(LPFIM)
-
 omi_pge_fitting_aux.o       : omi_pge_fitting_aux.f90             \
                               $(LPRCM) $(LIDXM) $(LPARM) $(LVARM) \
                               $(LOMDM) $(LERRM) $(LH5SM) $(LMETM) \

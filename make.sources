@@ -42,6 +42,7 @@ CSOURCES   = OMI_SMF_setmsg.c              \
 
 
 F90SOURCES = readh5dataset.f90             \
+             $(HDFMOD).f90                 \
              $(PRCMOD).f90                 \
              $(L1HMOD).f90                 \
              $(L1ZMOD).f90                 \
@@ -68,7 +69,6 @@ F90SOURCES = readh5dataset.f90             \
              $(SMAMOD).f90                 \
              $(RSCMOD).f90                 \
              $(LINMOD).f90                 \
-             $(HDFMOD).f90                 \
              $(RRFMOD).f90                 \
              $(CTFMOD).f90                 \
              $(PCFMOD).f90                 \
@@ -81,7 +81,6 @@ F90SOURCES = readh5dataset.f90             \
              fitting_loops.f90             \
              he5_output_tools.f90          \
              integration_routines.f90      \
-             metadata_tools.f90            \
              omi_pge_fitting_aux.f90       \
 	     omi_pge_fitting_process.f90   \
              omi_pge_swathline_loop.f90    \
@@ -100,6 +99,7 @@ F90SOURCES = readh5dataset.f90             \
 #             solar_fit.f90                 \
 
 OBJECTS = readh5dataset.o             \
+          $(HDFMOD).o                 \
           $(PRCMOD).o                 \
           $(L1HMOD).o                 \
           $(L1ZMOD).o                 \
@@ -126,7 +126,6 @@ OBJECTS = readh5dataset.o             \
           $(SMAMOD).o                 \
           $(RSCMOD).o                 \
           $(LINMOD).o                 \
-          $(HDFMOD).o                 \
           $(RRFMOD).o                 \
           $(CTFMOD).o                 \
           $(PCFMOD).o                 \
@@ -139,7 +138,6 @@ OBJECTS = readh5dataset.o             \
           fitting_loops.o             \
           he5_output_tools.o          \
           integration_routines.o      \
-          metadata_tools.o            \
           omi_pge_fitting_aux.o       \
           omi_pge_fitting_process.o   \
           omi_pge_swathline_loop.o    \
